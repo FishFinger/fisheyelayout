@@ -2,7 +2,9 @@ package custom.layouts
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix3D;
 	import flash.geom.Point;
+	import flash.geom.Vector3D;
 	
 	import mx.controls.Alert;
 	import mx.controls.Label;
@@ -12,7 +14,7 @@ package custom.layouts
 	import spark.layouts.supportClasses.LayoutBase;
 	
 	
-	public class FisheyeLayout extends LayoutBase
+	public class Fisheye3DLayout extends LayoutBase
 	{
 		private var _minSize:Number = 10;
 		private var _maxSize:Number = 100;
@@ -41,8 +43,8 @@ package custom.layouts
 		{
 			this._agglomerate = value;
 		}
-	
-		public function FisheyeLayout()
+		
+		public function Fisheye3DLayout()
 		{
 			super();
 		}
@@ -142,6 +144,10 @@ package custom.layouts
 				
 				// Position the element
 				element.setLayoutBoundsPosition(x - element.getLayoutBoundsWidth()/2 +_maxSize/2, y - element.getLayoutBoundsHeight()/2 + _maxSize/2);
+				var mymatrix:Matrix3D = new Matrix3D();
+				mymatrix.prependRotation(10,Vector3D.X_AXIS);
+				mymatrix.prependTranslation(x,y,0);
+				element.setLayoutMatrix3D(mymatrix,true);
 				
 				var center:Point = this.getCenterPosition(element);
 				this._positions[i] = center;

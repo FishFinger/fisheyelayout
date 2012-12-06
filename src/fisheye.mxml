@@ -74,7 +74,7 @@
 		<s:Label text="38"/>
 		<s:Label text="39"/>
 		<s:Label text="40"/>
-		<s:Label text="41"/>
+		<s:Image source="@Embed('img/neuneu.jpg')" />
 		<s:Label text="42"/>
 		<s:Label text="43"/>
 		<s:Label text="44"/>
@@ -85,7 +85,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:FisheyeLayout id="fisheyelayout" maxSize="100" minSize="20" spread="100"/>
+			<customlayout:Fisheye3DLayout id="fisheyelayout" maxSize="100" minSize="40" spread="50"/>
 		</s:layout>
 	</s:Group>
 </mx:Application>
