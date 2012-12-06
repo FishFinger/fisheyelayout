@@ -85,7 +85,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:Fisheye3DLayout id="fisheyelayout" maxSize="100" minSize="40" spread="50"/>
+			<customlayout:FisheyeAdvancedLayout id="fisheyelayout" maxSize="100" minSize="40" spread="50"/>
 		</s:layout>
 	</s:Group>
 </mx:Application>
