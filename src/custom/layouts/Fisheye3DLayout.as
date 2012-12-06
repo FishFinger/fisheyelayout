@@ -26,22 +26,22 @@ package custom.layouts
 		
 		public function set minSize(value:Number):void
 		{
-			this._minSize = value;
+			_minSize = value;
 		}
 		
 		public function set maxSize(value:Number):void
 		{
-			this._maxSize = value;
+			_maxSize = value;
 		}
 		
 		public function set spread(value:Number):void
 		{
-			this._spread = value;
+			_spread = value;
 		}
 		
 		public function set agglomerate(value:Number):void
 		{
-			this._agglomerate = value;
+			_agglomerate = value;
 		}
 		
 		public function Fisheye3DLayout()
@@ -67,7 +67,7 @@ package custom.layouts
 					layoutTarget.getElementAt(i);
 				
 				// Get de distance between mouse and element
-				var size:Number = this.getSizeByDistance(this.distance(this.localToGlobal(this.getCenterPosition(element)),mousePosition));
+				var size:Number = getSizeByDistance(distance(localToGlobal(getCenterPosition(element)),mousePosition));
 				
 				// Resize the element to its preferred size by passing
 				// NaN for the width and height constraints
@@ -80,7 +80,7 @@ package custom.layouts
 				var elementHeight:Number = element.getLayoutBoundsHeight();
 				
 				// Go to the next line
-				if (i % this._nbPerRow == 0)
+				if (i % _nbPerRow == 0)
 				{
 					// Start from the left side
 					x = 0;
@@ -91,9 +91,9 @@ package custom.layouts
 				}
 				
 				// Position the element
-				var position:Point = this.getPositionByMouse(mousePosition,this._positions[i]);
+				var position:Point = getPositionByMouse(mousePosition,_positions[i]);
 				element.setLayoutBoundsPosition(position.x - elementWidth / 2 ,position.y - elementHeight / 2);
-				//element.setLayoutBoundsPosition(this._positions[i].x - elementWidth / 2, this._positions[i].y - elementHeight / 2);
+				//element.setLayoutBoundsPosition(_positions[i].x - elementWidth / 2, _positions[i].y - elementHeight / 2);
 				
 				// Update the current position, add a gap of 10
 				x += _maxSize;
@@ -108,7 +108,7 @@ package custom.layouts
 			var y:Number = 0;
 			
 			// The max item per row
-			this._nbPerRow = Math.round(containerWidth/this._maxSize);
+			_nbPerRow = Math.round(containerWidth/_maxSize);
 			
 			// loop through the elements
 			var layoutTarget:GroupBase = target;
@@ -123,7 +123,7 @@ package custom.layouts
 				
 				// Resize the element to its preferred size by passing
 				// NaN for the width and height constraints
-				element.setLayoutBoundsSize(this._minSize, this._minSize);
+				element.setLayoutBoundsSize(_minSize, _minSize);
 				
 				// Find out the element's dimensions sizes.
 				// We do this after the element has been already resized
@@ -132,7 +132,7 @@ package custom.layouts
 				var elementHeight:Number = element.getLayoutBoundsHeight();
 				
 				// Go to the next line
-				if (i % this._nbPerRow == 0)
+				if (i % _nbPerRow == 0)
 				{
 					// Start from the left side
 					x = 0;
@@ -149,8 +149,8 @@ package custom.layouts
 				mymatrix.prependTranslation(x,y,0);
 				element.setLayoutMatrix3D(mymatrix,true);
 				
-				var center:Point = this.getCenterPosition(element);
-				this._positions[i] = center;
+				var center:Point = getCenterPosition(element);
+				_positions[i] = center;
 				
 				// Update the current position, add a gap of 10
 				x += _maxSize;
@@ -171,10 +171,10 @@ package custom.layouts
 		
 		private function getSizeByDistance(distance:Number):Number{
 			if(distance == 0) distance = 1;
-			var size:Number = this._maxSize / (distance / this._spread);
+			var size:Number = _maxSize / (distance / _spread);
 			
-			if(size > this._maxSize) size = this._maxSize;
-			else if(size < this._minSize) size = this._minSize;
+			if(size > _maxSize) size = _maxSize;
+			else if(size < _minSize) size = _minSize;
 			
 			return size;
 		}
@@ -188,10 +188,10 @@ package custom.layouts
 		private function getPositionByMouse(mousePosition:Point,elementPosition:Point):Point{
 			var distanceX:Number = Math.abs(mousePosition.x - elementPosition.x);
 			var distanceY:Number = Math.abs(mousePosition.y - elementPosition.y);
-			var distance:Number = this.distance(mousePosition,elementPosition);
+			var distance:Number = distance(mousePosition,elementPosition);
 			
-			var xTranslation:Number = this.getXFreeSpace(mousePosition,elementPosition);
-			var yTranslation:Number = this.getYFreeSpace(mousePosition,elementPosition);
+			var xTranslation:Number = getXFreeSpace(mousePosition,elementPosition);
+			var yTranslation:Number = getYFreeSpace(mousePosition,elementPosition);
 			
 			if(mousePosition.x < elementPosition.x) xTranslation *= -1;
 			if(mousePosition.y < elementPosition.y) yTranslation *= -1;
@@ -203,12 +203,12 @@ package custom.layouts
 		
 		private function getXFreeSpace(point1:Point,point2:Point):Number{
 			var distance:Number = Math.abs(point1.x - point2.x);
-			return distance / this._agglomerate;
+			return distance / _agglomerate;
 		}
 		
 		private function getYFreeSpace(point1:Point,point2:Point):Number{
 			var distance:Number = Math.abs(point1.y - point2.y);
-			return distance / this._agglomerate;
+			return distance / _agglomerate;
 		}
 	}
 }
