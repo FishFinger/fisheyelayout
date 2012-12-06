@@ -1,2 +1,7 @@
-*
-!src/*
+bin-debug/*
+components/*
+html-template/*
+libs/*
+*.swf
+.*
+*~
