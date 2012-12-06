@@ -57,44 +57,160 @@ package custom.layouts
 		
 		public function MousePosition(mousePosition:Point):void
 		{
-			// The position for the current element
-			var x:Number = 0;
-			var y:Number = 0;
+			var dist:Number = -1;
+			var component:ILayoutElement;
+			var noRow:int;
+			var noCol:int;
+			var c:ILayoutElement;
 			
-			// loop through the elements
-			var layoutTarget:GroupBase = target;
-			var count:int = layoutTarget.numElements;
-/*
-			for (var noRow:int = 0; noRow < _components.length; noRow++)
+			updateDisplayList(target.width,target.height);
+			
+			for (var row:int = 0; row < _components.length; row++) 
 			{
-				for (var noCol:int = 0; noCol < _components[noRow].length; noCol++)
+				for (var col:int = 0; col < _components[row].length; col++)
 				{
-				// get the current element, we're going to work with the
-					// ILayoutElement interface
-					var element:ILayoutElement = _components[noRow][noCol];
-					
-					// Get de distance between mouse and element
-					var size:Number = getSizeByDistance(distance(localToGlobal(getCenterPosition(element)),mousePosition));
-					
-					// Resize the element to its preferred size by passing
-					// NaN for the width and height constraints
-					element.setLayoutBoundsSize(size, size);
-					
-					// Find out the element's dimensions sizes.
-					// We do this after the element has been already resized
-					// to its preferred size.
-					var elementWidth:Number = element.getLayoutBoundsWidth();
-					var elementHeight:Number = element.getLayoutBoundsHeight();
-					
-					// Position the element
-					var position:Point = getPositionByMouse(mousePosition,_components[i]);
-					element.setLayoutBoundsPosition(position.x - elementWidth / 2 ,position.y - elementHeight / 2);
-					//element.setLayoutBoundsPosition(_positions[i].x - elementWidth / 2, _positions[i].y - elementHeight / 2);
-					
-					// Update the current position, add a gap of 10
-					x += _maxSize;
+					c = _components[row][col];
+					var tmpdist:Number = distance(mousePosition,localToGlobal(getCenterPosition(c)));
+					if(dist < 0 || dist > tmpdist){
+						dist = tmpdist;
+						component = c;
+						noRow = row;
+						noCol = col;
+					}
 				}
-			}*/
+			}
+			setElementSize(component,_maxSize, _maxSize);
+			
+			doCol(noRow,noCol);
+		}
+		
+
+		private function doCol(noRow:int, noCol:int):void
+		{
+			var row:int;
+			var component:ILayoutElement = _components[noRow][noCol];
+			var initialSize:Number = component.getLayoutBoundsWidth();
+			var coeff:Number = 1.5;
+			var c:ILayoutElement;
+			var previousComponent:ILayoutElement;
+			var PCwidth:int;
+			var PCy:int;
+			var y:int;
+			var shiftY:int;
+			
+			doRow(noRow,noCol,0);
+			
+			var size:Number = initialSize;
+			for(row = noRow + 1; row < _components.length; row++){
+				size /= coeff;
+				c = _components[row][noCol];
+				setElementSize(c,size,size);
+				
+				// Positionning
+				if(row - 1 > -1)
+				{
+					previousComponent = _components[row-1][noCol];
+					PCwidth = previousComponent.getLayoutBoundsWidth();
+					PCy = previousComponent.getLayoutBoundsY();
+					
+					y = PCy + _gap + PCwidth;
+					shiftY = y - c.getLayoutBoundsY();
+					c.setLayoutBoundsPosition(c.getLayoutBoundsX(),y);
+					doRow(row,noCol,shiftY);
+				}
+			}
+			size = initialSize;
+			for(row = noRow - 1; row > -1; row--){
+				size /= coeff;
+				c = _components[row][noCol];
+				setElementSize(c,size,size);
+				
+				// Positionning
+				if(row + 1 < _components.length)
+				{
+					previousComponent = _components[row+1][noCol];
+					PCwidth = previousComponent.getLayoutBoundsWidth();
+					PCy = previousComponent.getLayoutBoundsY();
+					
+					y = PCy - _gap - size;
+					shiftY = y - c.getLayoutBoundsY();
+					c.setLayoutBoundsPosition(c.getLayoutBoundsX(), y);
+					
+					doRow(row,noCol,shiftY);
+				}
+			}
+		}
+		
+		private function doRow(noRow:int, noCol:int, shiftY:int):void
+		{
+			var col:int;
+			var component:ILayoutElement = _components[noRow][noCol];
+			var initialSize:Number = component.getLayoutBoundsWidth();
+			var coeff:Number = 1.5;
+			var c:ILayoutElement;
+			var previousComponent:ILayoutElement;
+			var PCwidth:int;
+			var PCx:int;
+			var x:int;
+			
+			
+			var size:Number = initialSize;
+			for(col = noCol - 1; col > -1; col--){
+				size /= coeff;
+				c = _components[noRow][col];
+				setElementSize(c,size,size);
+				
+				// Positionning
+				if(col + 1 < _components[noRow].length)
+				{
+					previousComponent = _components[noRow][col+1];
+					PCwidth = previousComponent.getLayoutBoundsWidth();
+					PCx = previousComponent.getLayoutBoundsX();
+					
+					x = PCx - _gap - size;
+					c.setLayoutBoundsPosition(x,c.getLayoutBoundsY() + shiftY);
+				}
+			}
+			size = initialSize;
+			for(col = noCol + 1; col < _components[noRow].length; col++){
+				size /= coeff;
+				c = _components[noRow][col];
+				setElementSize(c,size,size);
+				
+				// Positionning
+				if(col - 1 > -1)
+				{
+					previousComponent = _components[noRow][col-1];
+					PCwidth = previousComponent.getLayoutBoundsWidth();
+					PCx = previousComponent.getLayoutBoundsX();
+					
+					x = PCx + _gap + PCwidth;
+					c.setLayoutBoundsPosition(x,c.getLayoutBoundsY() + shiftY);
+				}
+			}
+		}
+		
+		private function setElementSize(component:ILayoutElement, width:int, height:int):void
+		{
+			var oldwidth:int = component.getLayoutBoundsWidth();
+			var oldheight:int = component.getLayoutBoundsHeight();
+			
+			component.setLayoutBoundsSize(width,height);
+			
+			var x:int = component.getLayoutBoundsX();
+			var y:int = component.getLayoutBoundsY();
+			
+			if(oldwidth < width)
+				x -= (width - oldwidth) / 2;
+			else
+				x += (oldwidth - width) / 2;
+			
+			if(oldheight < height)
+				y -= (height - oldheight) / 2;
+			else
+				y += (oldheight - height) / 2;
+			
+			component.setLayoutBoundsPosition(x,y);
 		}
 		
 		override public function updateDisplayList(containerWidth:Number,
