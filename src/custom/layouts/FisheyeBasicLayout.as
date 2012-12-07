@@ -17,7 +17,7 @@ package custom.layouts
 		private var _minSize:Number = 10;
 		private var _maxSize:Number = 100;
 		private var _spread:Number = 10;
-		private var _agglomerate:Number = 100;
+		private var _agglomerate:Number = 50;
 		private var _nbPerRow:Number;
 		private var _positions:Array = new Array();
 		
@@ -103,7 +103,7 @@ package custom.layouts
 		{
 			// The position for the current element
 			var x:Number = 0;
-			var y:Number = 0;
+			var y:Number = _maxSize * -1;
 			
 			// The max item per row
 			_nbPerRow = Math.round(containerWidth/_maxSize);
@@ -197,6 +197,7 @@ package custom.layouts
 		
 		private function getXFreeSpace(point1:Point,point2:Point):Number{
 			var distance:Number = Math.abs(point1.x - point2.x);
+			
 			return distance / _agglomerate;
 		}
 		
