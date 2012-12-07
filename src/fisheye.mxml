@@ -3,8 +3,8 @@
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				xmlns:customlayout="custom.layouts.*"
-				minWidth="955" minHeight="600"
-				mouseMove="mouseMove(event)">
+				xmlns:customcontainer="custom.containers.*"
+				minWidth="955" minHeight="600" mouseMove="mouseMove(event)">
 	<fx:Declarations>
 		<!-- Placer ici les éléments non visuels (services et objets de valeur, par exemple). -->
 	</fx:Declarations>
@@ -33,7 +33,44 @@
 			color: white;
 		}
 	</fx:Style>
-	<s:Group id="fisheyeeffect" width="955">
+	<!--
+    <customcontainer:Grid>
+		<mx:GridRow>
+			<mx:GridItem>
+				<s:Label text="1.1"/>
+			</mx:GridItem>
+			<mx:GridItem>
+				<s:Label text="1.2"/>
+			</mx:GridItem>
+			<mx:GridItem>
+				<s:Label text="1.3"/>
+			</mx:GridItem>
+		</mx:GridRow>
+		<mx:GridRow>
+			<mx:GridItem>
+				<s:Label text="2.1"/>
+			</mx:GridItem>
+			<mx:GridItem>
+				<s:Label text="2.2"/>
+			</mx:GridItem>
+			<mx:GridItem>
+				<s:Label text="2.3"/>
+			</mx:GridItem>
+		</mx:GridRow>
+		<mx:GridRow>
+			<mx:GridItem>
+				<s:Label text="3.1"/>
+			</mx:GridItem>
+			<mx:GridItem>
+				<s:Label text="3.2"/>
+			</mx:GridItem>
+			<mx:GridItem>
+				<s:Label text="3.3"/>
+			</mx:GridItem>
+		</mx:GridRow>
+	</customcontainer:Grid>
+	-->
+	<s:Group id="fisheyeeffect" width="80%">
 		<s:Label text="1"/>
 		<s:Label text="2"/>
 		<s:Label text="3"/>
@@ -85,7 +122,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:FisheyeAdvancedLayout id="fisheyelayout" maxSize="200" minSize="85" spread="50"/>
+			<customlayout:FisheyeBasicLayout id="fisheyelayout" maxSize="100" minSize="25" spread="120"/>
 		</s:layout>
 	</s:Group>
 </mx:Application>

@@ -94,9 +94,11 @@ package custom.layouts
 		private function getSizeByDist(dist:int):int
 		{
 			if(dist < 1) dist = 1;
+			
 			var size:int = _maxSize / (dist / 40);
-			//if(size < _minSize) size = _minSize;
-			//if(size > _maxSize) size = _maxSize;
+			
+			if(size < _minSize) size = _minSize;
+			if(size > _maxSize) size = _maxSize;
 			return size;
 		}
 		
