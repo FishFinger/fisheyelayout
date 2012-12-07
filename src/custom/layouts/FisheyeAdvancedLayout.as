@@ -23,6 +23,7 @@ package custom.layouts
 		private var _nbPerRow:Number;
 		
 		private var _components:Array = new Array();
+		private var _positions:Array = new Array();
 		
 		
 		public function set minSize(value:Number):void
@@ -62,15 +63,21 @@ package custom.layouts
 			var noRow:int;
 			var noCol:int;
 			var c:ILayoutElement;
-			
-			updateDisplayList(target.width,target.height);
-			
-			for (var row:int = 0; row < _components.length; row++) 
+						
+			for (var row:int = 0; row < _positions.length; row++) 
 			{
-				for (var col:int = 0; col < _components[row].length; col++)
+				for (var col:int = 0; col < _positions[row].length; col++)
 				{
+					var center:Point = localToGlobal(_positions[row][col]);
+					center.x += _minSize / 2;
+					center.y += _minSize / 2;
+					var tmpdist:Number = distance(mousePosition,center);
+					
 					c = _components[row][col];
-					var tmpdist:Number = distance(mousePosition,localToGlobal(getCenterPosition(c)));
+					c.setLayoutBoundsPosition(_positions[row][col].x,_positions[row][col].y);
+					c.setLayoutBoundsSize(_minSize,_minSize);
+					
+					
 					if(dist < 0 || dist > tmpdist){
 						dist = tmpdist;
 						component = c;
@@ -79,9 +86,18 @@ package custom.layouts
 					}
 				}
 			}
-			setElementSize(component,_maxSize, _maxSize);
+			setElementSize(component,getSizeByDist(dist), getSizeByDist(dist));
 			
 			doCol(noRow,noCol);
+		}
+		
+		private function getSizeByDist(dist:int):int
+		{
+			if(dist < 1) dist = 1;
+			var size:int = _maxSize / (dist / 40);
+			//if(size < _minSize) size = _minSize;
+			//if(size > _maxSize) size = _maxSize;
+			return size;
 		}
 		
 
@@ -230,6 +246,7 @@ package custom.layouts
 			var noRow:int = 0;
 			var noCol:int = 0;
 			_components[noRow] = new Array();
+			_positions[noRow] = new Array();
 			for (var i:int = 0; i < count; i++)
 			{
 				// get the current element, we're going to work with the
@@ -253,10 +270,12 @@ package custom.layouts
 					y += _minSize+_gap;
 					noRow++;
 					_components[noRow] = new Array();
+					_positions[noRow] = new Array();
 				}
 				
 				// Position the element
 				element.setLayoutBoundsPosition(x, y);
+				_positions[noRow][noCol] = new Point(x,y);
 				_components[noRow][noCol] = element;
 				
 				// Update the current position, add a gap of 10
@@ -288,9 +307,10 @@ package custom.layouts
 		}
 		
 		private function localToGlobal(point:Point):Point{
-			point.x += target.x;
-			point.y += target.y;
-			return point;
+			var retour:Point = point.clone();
+			retour.x += target.x;
+			retour.y += target.y;
+			return retour;
 		}
 		
 		private function getPositionByMouse(mousePosition:Point,elementPosition:Point):Point{
