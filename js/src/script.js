@@ -25,8 +25,9 @@ function init(e)
     
     var list = e.getElementsByTagName('img');
 
-    for each (var i in list)
+    for(var j in list)
     {
+       var i = list[j];
        if(i.style != null)
         {
             if(i.offsetLeft == null)
@@ -56,8 +57,9 @@ function init(e)
         }
     }
 
-    for each (var i in list)
+    for(var j in list)
     {
+        var i = list[j];
         if(i.style != null)
             i.style.position = "absolute";
     }
@@ -83,14 +85,19 @@ function souris(event)
   var height = 100;
     var dist = 0;
     var sup;
-     for each (var i in e.getElementsByTagName('img'))
+    var list = e.getElementsByTagName('img');
+     for(var j in list)
     {
+        var i = list[j];
         if(i.style != null)
         {
             width = 100;
             height = 100;
-            dist =  distance(i.left+width/2, i.top+height/2 ,x,y);
-            sup = Math.max((200 - (dist/2)),0);
+            dist =  (distance(i.left+width/2, i.top+height/2 ,x,y));
+            //sup = Math.max((200 - (dist/2)),0);
+            sup = parseInt((1/(Math.pow(dist/400,2)+0.33)-1)*100);
+            if(sup < 5)
+                sup = 0;
             width = sup + 100;
             height = sup + 100;
 
