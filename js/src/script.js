@@ -5,19 +5,18 @@ var cell_width;
 var cell_height;
 var width = 100;
 var height = 100;
+var space = 8;
 var list;
+var MODE_SQUARE = true;
 
-var fact_gro = 0.9;
+var fact_gro = 0.8;
 
 function main()
 {
-
-     var e = document.getElementById("canevas");
+    var e = document.getElementById("canevas");
     init(e);
     window.addEventListener("mousemove", souris, false);
-    
-    window.addEventListener("mouseout", souris_out, false);
-    // window.onmouseout = souris_out;
+    window.addEventListener("mouseout", souris_out, false); 
 }
 
 function init(e)
@@ -30,15 +29,16 @@ function init(e)
     cell_width = new Array();
     cell_height = new Array();
 
-    for(var i=1; i<106; ++i)
+    for(var i=1; i<85; ++i)
     {
-        var img = document.createElement('img');
-        img.src = "../res/" + ((i%8)+1) + ".jpg";
-        img.setAttribute("class", "fish");
-        e.appendChild(img);
+        var div = document.createElement('div');
+        div.setAttribute("class", "fish");
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        e.appendChild(div);
     }
     
-    list = e.getElementsByTagName('img');
+    list = e.getElementsByTagName('div');
 
     var x = 0;
     var y = 0;
@@ -72,93 +72,65 @@ function init(e)
                 d.style.top = d.offsetTop+"px" ;
             }
             
-            //e.innerHTML = ++cpt +"--"+ e.offsetLeft+", "+e.offsetTop;
             if(old_y_pos == null)
                 old_y_pos = d.top;
 
             if(old_y_pos != d.top)
             {
                 x = 0;
-                ++y;
-                tab[y] = new Array();
+                tab[++y] = new Array();
                 old_y_pos = d.top;
             }
 
             d.yy = y;
             d.xx = x;
-            d.innerHTML = x + "," + y;
             tab[y][x] = d;
-            ++x;
             cell_height[y] = height;
             cell_width[x] = width;
+            ++x;
         }
     }
 
-    for(var j in list)
+    for(var i in list)
     {
-        var i = list[j];
-        if(i.style != null)
-            i.style.position = "absolute";
+        var div = list[i];
+        if(div.style != null)
+            div.style.position = "absolute";
     }
-
-    
-    
 
 }
 
-function distance(x1,y1,x2,y2)
+function distance(x,y)
+{
+    return Math.abs(x-y);
+}
+
+/*function distance(x1,y1,x2,y2)
 {
     return Math.floor(Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2)));
-}
+}*/
 
-
-function souris_out(e)
-{
-    mouseX = e.pageX;
-    mouseY = e.pageY;
-    if ((mouseY >= 0 && mouseY <= window.innerHeight)
-    	&& (mouseX >= 0 && mouseX <= window.innerWidth))
-    	return;
-    //alert("out");
-    var e = document.getElementById("canevas");
-    
-    var list = e.getElementsByTagName('img');
-    for(var j in list)
-    {
-        var i = list[j];
-        if(i.style != null)
-        {
-            i.style.top = i.top + "px";
-            i.style.left = i.left + "px";
-
-            i.style.zIndex = 1;
-            i.style.width = width + "px";
-            i.style.height = height + "px";
-        }
-    }
-}
 
 function souris(event)
 {
 
-  var mouse_x = event.clientX;
-  var mouse_y = event.clientY;
-  document.getElementById('coordonnes').value = x + ', ' + y;
+    var mouse_x = event.clientX;
+    var mouse_y = event.clientY;
+    document.getElementById('coordonnes').value = mouse_x + ', ' + mouse_y;
 
-
-  var dist = 0;
-  var sup;
+    var dist = 0;
+    var sup;
  
     for(var y in tab)
     {
-        dist =  Math.abs(mouse_y - (tab[0][0].top + y*height + height/2));
+        dist =  distance(mouse_y, (tab[0][0].top + y*(height+space) + height/2));
         sup = parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
         cell_height[y] = height + sup;
     }
 
     for(var x in tab[0])
     {
-        dist =  Math.abs(mouse_x - (tab[0][0].left + x*width + width/2));
+        dist =  Math.abs(mouse_x - (tab[0][0].left + x*(width+space) + width/2));
         sup = parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
         cell_width[x] = width + sup;
     }
@@ -197,11 +169,14 @@ function souris(event)
         {
             pos_y += cell_height[y];
         }
-    var hacky = ((0.5+tab.length)*height - pos_y) / tab.length; 
+    var hacky = ((1+tab.length)*height - pos_y) / tab.length; 
 
 
     pos_x = tab[0][0].left;
     pos_y = tab[0][0].top;
+    var img_w;
+    var img_h;
+    var ww;
     for(var y in tab)
     {
         for(var x in tab[y])
@@ -209,18 +184,74 @@ function souris(event)
                 div = tab[y][x];
                 w = cell_width[div.xx] + hackx;
                 h = cell_height[div.yy] + hacky;
-                div.style.top =  (pos_y+4) + "px";
-                //div.offsetLeft = 0;
-                div.style.left = (pos_x+4) + "px";
-                //div.offsetTop = 0;
+                div.style.top =  (pos_y) + "px";
+                div.style.left = (pos_x) + "px";
                 
-                div.style.width = (w-8) + "px";
-                div.style.height =  (h-8) + "px";
-               
-                pos_x += w;
+                if(MODE_SQUARE)
+                {
+                    if(w > h)
+                        ww = h;
+                    else
+                        ww = w;
+                    
+                    div.style.width = (ww-space) + "px";
+                    div.style.height =  (ww-space) + "px";
+                    div.style.top = (pos_y + (h-ww)/2) + "px";
+                    div.style.left = (pos_x + (w-ww)/2) + "px";
+                    
+                }
+                else
+                {
+                    div.style.width = (w-space) + "px";
+                    div.style.height =  (h-space) + "px";
+                }
+                /*img =  div.childNodes[0];
+                img.style.width = (w-8) + "px";
+                img.style.height = (h-8) + "px";*/
+
+                /*img_w = img.width;
+                img_h = img.height;
+                if(w < h)
+                {
+                    img.style.width = (w-10) + "px";
+                    img_h = ((w-10)* (img_h/img_w));
+                    img.style.height = img_w + "px";
+                    img.style.position = "relative";
+                    img.style.top = (((h-10) - img_w)/2) + "px";
+                }
+                else
+                {
+                    img.style.height = (h-10) + "px";
+                    img.style.width = ((h-10)* (img_w/img_h)) + "px";
+                }*/
+       
+                pos_x += w + space;
             }
-        pos_y += h;
+        pos_y += h + space;
         pos_x = tab[0][0].left;
     }
 
+}
+
+
+
+function souris_out(e)
+{
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+    if ((mouseY >= 0 && mouseY <= window.innerHeight)
+    	&& (mouseX >= 0 && mouseX <= window.innerWidth))
+    	return;
+    
+    for(var i in list)
+    {
+        var div = list[i];
+        if(div.style != null)
+        {
+            div.style.top = div.top + "px";
+            div.style.left = div.left + "px";
+            div.style.width = width + "px";
+            div.style.height = height + "px";
+        }
+    }
 }
