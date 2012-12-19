@@ -5,10 +5,11 @@ var cell_width;
 var cell_height;
 var width = 100;
 var height = 100;
-var space = 8;
+var space = 4;
 var list;
 var MODE_SQUARE = true;
 
+var slider;
 var fact_gro = 0.8;
 
 function main()
@@ -17,6 +18,14 @@ function main()
     init(e);
     window.addEventListener("mousemove", souris, false);
     window.addEventListener("mouseout", souris_out, false); 
+    slider = document.getElementById("fact_gro");
+    slider.addEventListener("change", sliderf, false);
+}
+
+function sliderf()
+{
+    //alert("test");
+    fact_gro = slider.value / 100;
 }
 
 function init(e)
