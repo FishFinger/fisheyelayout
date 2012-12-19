@@ -202,7 +202,7 @@ function souris(event)
                 pos_x += w;
             }
         pos_y += h;
-        pos_x = 0;
+        pos_x = tab[0][0].left;
     }
 
 }
