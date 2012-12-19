@@ -3,18 +3,16 @@ body
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: #222222;
+  background: #BBF;
   color: white;
 }
 
 .fish
 {
     float: left;
-    background-color: grey;
+    background-color: white;
  
     margin: 4px;
-    color: white;
-    border: 4px solid white;
     overflow: hidden;
     text-align: center;
 }
