@@ -7,6 +7,8 @@ var width = 100;
 var height = 100;
 var list;
 
+var fact_gro = 0.9;
+
 function main()
 {
 
@@ -28,7 +30,7 @@ function init(e)
     cell_width = new Array();
     cell_height = new Array();
 
-    for(var i=1; i<76; ++i)
+    for(var i=1; i<106; ++i)
     {
         var img = document.createElement('img');
         img.src = "../res/" + ((i%8)+1) + ".jpg";
@@ -149,15 +151,15 @@ function souris(event)
  
     for(var y in tab)
     {
-        dist =  Math.abs(mouse_y - (y*height + height/2));
-        sup = parseInt((1/(Math.pow(dist/400,2)+0.33)-1)*100);
+        dist =  Math.abs(mouse_y - (tab[0][0].top + y*height + height/2));
+        sup = parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
         cell_height[y] = height + sup;
     }
 
     for(var x in tab[0])
     {
-        dist =  Math.abs(mouse_x - (x*width + width/2));
-        sup = parseInt((1/(Math.pow(dist/400,2)+0.33)-1)*100);
+        dist =  Math.abs(mouse_x - (tab[0][0].left + x*width + width/2));
+        sup = parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
         cell_width[x] = width + sup;
     }
 
@@ -179,25 +181,41 @@ function souris(event)
          }
      }*/
 
-    var pos_x = tab[0][0].left;
-    var pos_y = tab[0][0].top;
+    var pos_x = 0;
+    var pos_y = 0;
     var w;
     var h;
     var div;
+    
+    for(var x in tab[0])
+        {
+            pos_x += cell_width[x];
+        }
+    var hackx = ((1+tab[0].length)*width - pos_x) / tab[0].length; 
+
+    for(var y in tab)
+        {
+            pos_y += cell_height[y];
+        }
+    var hacky = ((0.5+tab.length)*height - pos_y) / tab.length; 
+
+
+    pos_x = tab[0][0].left;
+    pos_y = tab[0][0].top;
     for(var y in tab)
     {
         for(var x in tab[y])
             {
                 div = tab[y][x];
-                w = cell_width[div.xx];
-                h = cell_height[div.yy];
-                div.style.top =  (pos_y+2) + "px";
+                w = cell_width[div.xx] + hackx;
+                h = cell_height[div.yy] + hacky;
+                div.style.top =  (pos_y+4) + "px";
                 //div.offsetLeft = 0;
-                div.style.left = (pos_x+2) + "px";
+                div.style.left = (pos_x+4) + "px";
                 //div.offsetTop = 0;
                 
-                div.style.width = (w-4) + "px";
-                div.style.height =  (h-4) + "px";
+                div.style.width = (w-8) + "px";
+                div.style.height =  (h-8) + "px";
                
                 pos_x += w;
             }
