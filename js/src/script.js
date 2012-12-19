@@ -3,14 +3,14 @@ window.onload = function(){main()};
 var tab;
 var cell_width;
 var cell_height;
-var width = 100;
-var height = 100;
+var width = 50;
+var height = 50;
 var space = 4;
 var list;
-var MODE_SQUARE = true;
+var MODE_SQUARE = false;
 
 var slider;
-var fact_gro = 0.8;
+var fact_gro = 0.5;
 
 function main()
 {
@@ -20,6 +20,14 @@ function main()
     window.addEventListener("mouseout", souris_out, false); 
     slider = document.getElementById("fact_gro");
     slider.addEventListener("change", sliderf, false);
+    
+    checkbox = document.getElementById("mode_square");
+    checkbox.addEventListener("change", toggle_square_mod, false);
+}
+
+function toggle_square_mod()
+{
+    MODE_SQUARE = !MODE_SQUARE;
 }
 
 function sliderf()
@@ -38,7 +46,7 @@ function init(e)
     cell_width = new Array();
     cell_height = new Array();
 
-    for(var i=1; i<85; ++i)
+    for(var i=1; i<300; ++i)
     {
         var div = document.createElement('div');
         div.setAttribute("class", "fish");
@@ -109,10 +117,6 @@ function init(e)
 
 }
 
-/*function distance(x,y)
-{
-    return Math.abs(x-y);
-}*/
 
 function min(x,y)
 {
@@ -177,16 +181,15 @@ function souris(event)
     var div;
     
     for(var x in tab[0])
-        {
-            pos_x += cell_width[x];
-        }
-    var hackx = ((1+tab[0].length)*width - pos_x) / tab[0].length; 
+        pos_x += cell_width[x];
+    
+    var hackx = ((tab[0].length)*width - pos_x) / tab[0].length; 
 
     for(var y in tab)
         {
             pos_y += cell_height[y];
         }
-    var hacky = ((1+tab.length)*height - pos_y) / tab.length; 
+    var hacky = ((tab.length)*height - pos_y) / tab.length; 
 
 
     pos_x = tab[0][0].left;
@@ -208,21 +211,21 @@ function souris(event)
                 {
                     ww = min(w,h);
                     
-                    div.style.width = (ww-space) + "px";
-                    div.style.height =  (ww-space) + "px";
+                    div.style.width = ww + "px";
+                    div.style.height =  ww + "px";
                     div.style.top = (pos_y + (h-ww)/2) + "px";
                     div.style.left = (pos_x + (w-ww)/2) + "px";
                     
                 }
                 else
                 {
-                    div.style.width = (w-space) + "px";
-                    div.style.height =  (h-space) + "px";
+                    div.style.width = w + "px";
+                    div.style.height =  h + "px";
                 }
             
-                pos_x += w + space;
+                pos_x += w + 2*space;
             }
-        pos_y += h + space;
+        pos_y += h + 2*space;
         pos_x = tab[0][0].left;
     }
 
