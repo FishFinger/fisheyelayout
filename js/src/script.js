@@ -100,15 +100,20 @@ function init(e)
 
 }
 
-function distance(x,y)
+/*function distance(x,y)
 {
     return Math.abs(x-y);
+}*/
+
+function min(x,y)
+{
+    return (x<y)? x : y;
 }
 
-/*function distance(x1,y1,x2,y2)
+function distance(x1,y1,x2,y2)
 {
     return Math.floor(Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2)));
-}*/
+}
 
 
 function souris(event)
@@ -119,39 +124,42 @@ function souris(event)
     document.getElementById('coordonnes').value = mouse_x + ', ' + mouse_y;
 
     var dist = 0;
-    var sup;
+    var size; var tmp;
  
     for(var y in tab)
     {
-        dist =  distance(mouse_y, (tab[0][0].top + y*(height+space) + height/2));
-        sup = parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
-        cell_height[y] = height + sup;
+        cell_height[y] = 0;
+        for(var x in tab[y])
+        {
+            dist =  distance(
+                mouse_x, 
+                mouse_y, 
+                tab[0][0].left + x*(width+space) + width/2,
+                tab[0][0].top + y*(height+space) + height/2
+            );
+            size = height + parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
+            if(size > cell_height[y])
+                cell_height[y] = size;
+        }
     }
 
     for(var x in tab[0])
     {
-        dist =  Math.abs(mouse_x - (tab[0][0].left + x*(width+space) + width/2));
-        sup = parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
-        cell_width[x] = width + sup;
+        cell_width[x] = 0;
+        for(var y in tab)
+        {
+            dist =  distance(
+                mouse_x, 
+                mouse_y, 
+                tab[0][0].left + x*(width+space) + width/2,
+                tab[0][0].top + y*(height+space) + height/2
+            );
+            size = width + parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
+            if(size > cell_width[x])
+                cell_width[x] = size;
+        }
     }
 
-   /*for(var j in list)
-     {
-         var i = list[j];
-         if(i.style != null)
-         {
-             var titi = i.xx;
-             var w = cell_width[i.xx];
-             var h = cell_height[i.yy];
-             i.style.top = (parseInt(i.top) - (h/2)) + "px";
-             i.style.left = (parseInt(i.left) - (w/2)) + "px";
-             
-             i.style.zIndex = w+h;
-             
-             i.style.width = w + "px";
-             i.style.height = h + "px";
-         }
-     }*/
 
     var pos_x = 0;
     var pos_y = 0;
@@ -189,10 +197,7 @@ function souris(event)
                 
                 if(MODE_SQUARE)
                 {
-                    if(w > h)
-                        ww = h;
-                    else
-                        ww = w;
+                    ww = min(w,h);
                     
                     div.style.width = (ww-space) + "px";
                     div.style.height =  (ww-space) + "px";
@@ -205,26 +210,7 @@ function souris(event)
                     div.style.width = (w-space) + "px";
                     div.style.height =  (h-space) + "px";
                 }
-                /*img =  div.childNodes[0];
-                img.style.width = (w-8) + "px";
-                img.style.height = (h-8) + "px";*/
-
-                /*img_w = img.width;
-                img_h = img.height;
-                if(w < h)
-                {
-                    img.style.width = (w-10) + "px";
-                    img_h = ((w-10)* (img_h/img_w));
-                    img.style.height = img_w + "px";
-                    img.style.position = "relative";
-                    img.style.top = (((h-10) - img_w)/2) + "px";
-                }
-                else
-                {
-                    img.style.height = (h-10) + "px";
-                    img.style.width = ((h-10)* (img_w/img_h)) + "px";
-                }*/
-       
+            
                 pos_x += w + space;
             }
         pos_y += h + space;
@@ -243,6 +229,11 @@ function souris_out(e)
     	&& (mouseX >= 0 && mouseX <= window.innerWidth))
     	return;
     
+    reset(list);
+}
+
+function reset(list)
+{
     for(var i in list)
     {
         var div = list[i];
