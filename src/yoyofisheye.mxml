@@ -23,13 +23,13 @@
 		}
 		
 		private function changeGrossissement():void{
-			Alert.show("grossissement ! -> " + sliderGrossissement.value);
+			fisheyelayout.majFactGro(sliderGrossissement.value / 100);
 		}
 		private function changeAttenuation():void{
-			Alert.show("attenuation ! -> " + sliderAttenuation.value);
+			fisheyelayout.majAttenuation(200 - sliderAttenuation.value);
 		}
 		private function changeCarre():void{
-			Alert.show("carré ! -> " + checkboxCarre.selected);
+			fisheyelayout.majSquareMod(checkboxCarre.selected);
 		}
 	]]></fx:Script>
 	
@@ -49,11 +49,11 @@
 		</s:layout>
 		<s:Label text="Grossissement : " />
 		<s:HSlider id="sliderGrossissement" minimum="0" maximum="100"
-				   thumbRelease="changeGrossissement()"/>
+				   change="changeGrossissement()"/>
 		
 		<s:Label text="Attenuation : " />
 		<s:HSlider id="sliderAttenuation" minimum="0" maximum="100"
-				   thumbRelease="changeAttenuation()" />
+				   change="changeAttenuation()" />
 		
 		<s:CheckBox id="checkboxCarre" label="Carré" selected="false" change="changeCarre()" />
 		
