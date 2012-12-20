@@ -16,8 +16,8 @@
                 Coordonnées de la souris : 
                 <input type="text" id="coordonnes" value="inconnues"
                 readonly="readonly" />
-                grossissement : <input id="fact_gro" type="range" value="40" />
-                attenuation :<input id="attenuation" type="range" value="80" />
+                grossissement : <input id="fact_gro" type="range" value="100" />
+                attenuation :<input id="attenuation" type="range" value="100" />
                 <input id="mode_square" type="checkbox"
                 /> <label>Square Mod</label>
 </div>

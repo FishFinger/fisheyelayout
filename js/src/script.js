@@ -11,8 +11,8 @@ var MODE_SQUARE = false;
 
 var slider;
 var attenuator;
-var fact_gro = 0.5;
-var attenuation = 120;
+var fact_gro = 0.3;
+var attenuation = 150;
 
 function main()
 {
@@ -22,10 +22,10 @@ function main()
     window.addEventListener("mouseout", souris_out, false); 
     slider = document.getElementById("fact_gro");
     slider.addEventListener("change", sliderf, false);
-    
+    slider.value = fact_gro*100;
     attenuator = document.getElementById("attenuation");
     attenuator.addEventListener("change", update_attenuator, false);
-    
+    attenuator.value = 200 - attenuation;
     checkbox = document.getElementById("mode_square");
     checkbox.addEventListener("change", toggle_square_mod, false);
 }
