@@ -45,7 +45,7 @@
 	<h1>Approche avancée</h1>
     <h2>Mise à jour</h2>
     <center>
-        <img src="img/js_4.svg" alt="oops" style="width:20em"/>
+        <img src="img/js_4.svg" alt="oops" style="width:20em;position:relative;top:1.25em;"/>
         <img src="img/js_5.svg" alt="oops" style="width:20em"/>
     </center>
 </div>
