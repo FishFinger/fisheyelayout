@@ -41,7 +41,7 @@ package custom.layouts
     {
       // The position for the current element
       var x:Number = -1;
-      var y:Number = -1;
+      var y:Number = 0;
       
       resetCellSize();			
 
@@ -56,7 +56,7 @@ package custom.layouts
                                  y += 1;     
                                  x = 0;   
                             }   
-					
+
 	// Get de distance between mouse and element
 	var size:Number = getSizeByDistance(distance(localToGlobal(getCenterPosition(x,y)),mousePosition));
         if(_cell_width[x] < size)
@@ -67,34 +67,13 @@ package custom.layouts
 			
         refresh();
       }
-	// Go to the next line
-	/*if (i % _nbPerRow == 0)
-	{
-	  // Start from the left side
-					x = 0;
-					
-					// Move down by elementHeight, we're assuming all 
-					// elements are of equal height
-					y += _maxSize;
-				}
-				
-				// Position the element
-				var position:Point = getPositionByMouse(mousePosition,_positions[i]);
-				element.setLayoutBoundsPosition(position.x - elementWidth / 2 ,position.y - elementHeight / 2);
-				//element.setLayoutBoundsPosition(_positions[i].x - elementWidth / 2, _positions[i].y - elementHeight / 2);
-				
-				// Update the current position, add a gap of 10
-				x += _maxSize;
-			}*/
-                        
- 
-		}
+      }
 		
 		override public function updateDisplayList(containerWidth:Number, containerHeight:Number):void
 		{
 			// The position for the current element
 			var x:Number = -1;
-			var y:Number = -1;
+			var y:Number = 0;
 		
 
                         if(!_init)
@@ -107,7 +86,7 @@ package custom.layouts
                         var element:ILayoutElement;    
 			  // The max item per row
 			  _nbPerRow = Math.round(containerWidth/_defaultSize);
-                          for(i = 0; i < 20 ; i++)
+                          for(i = 0; i < 12 ; i++)
                              _grid[i] = new Array();
 			
 			  // loop through the elements
@@ -129,11 +108,11 @@ package custom.layouts
                             _grid[x][y] = element;
                             _cell_width[x] = _defaultSize;
                             _cell_height[y] = _defaultSize;
-                            if(x > _nb_line)
-                               _nb_line = x;
+                            if(x > _nb_col)
+                               _nb_col = x;
                            }
                            _init = true;
-                           _nb_col = y;
+                           _nb_line = y;
                          }
                          _nb_col++;
                          _nb_line++;
@@ -155,17 +134,19 @@ package custom.layouts
                      var pos_x:Number = 0;
                      var pos_y:Number = 0;   
                     
-                    for(i = 0; i <= _nb_col; i++)
+                    for(i = 0; i < _nb_col; i++)
                        pos_x += _cell_width[i];
     
-                    var hackx:int = (_defaultSize*_nb_col - pos_x) / _nb_col; 
+                    var hackx:Number = (_defaultSize*_nb_col - pos_x) / _nb_col; 
+                    //Alert.show(" (" +_defaultSize + "*"  + _nb_col + " -" + pos_x + ") /" +  _nb_col + ";" +hackx+"x");
                     
 
-                    for(i = 0; i <= _nb_line; i++)
+                    for(i = 0; i < _nb_line; i++)
                        pos_y += _cell_height[i];
         
-                    var hacky:int = (_defaultSize*_nb_line - pos_y) / _nb_line; 
-                   
+                    var hacky:Number = (_defaultSize*_nb_line - pos_y) / _nb_line; 
+                     //Alert.show( "(" +_defaultSize + "*" +_nb_line + " -"+ pos_y + ") /" +  _nb_line + "; " +hacky+"y");
+
 
                     pos_x = 0;
                     pos_y = target.y;   
