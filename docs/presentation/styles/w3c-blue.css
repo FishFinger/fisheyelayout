@@ -262,6 +262,7 @@ ul.positive, ul.negative {
 ul.positive {
     background: url("../graphics/positive.png") no-repeat scroll left center transparent;
     color: green;
+    min-height: 58px;
 }
 
 ul.negative {

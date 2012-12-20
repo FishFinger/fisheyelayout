@@ -55,8 +55,12 @@
             <p>There are any problems</p>
             </object>
     </center>
-    <div class="incremental">
-   	<div class="popup spopup">
+</div>
+
+<div class="slide">
+	<h1>Approche globale</h1>
+    <h2>Implémentation</h2>
+   	<div class="popup spopup" style="z-index:99">
 	<ul class="positive">
 	    <li>Rapide à mettre en oeuvre</li>
 	    <li>Effet fluide</li>
@@ -65,8 +69,6 @@
 	    <li>Beaucoup d'espace perdu</li>
 	</ul>
 	 </div>
-	 </div>
-
 </div>
 
 <div class="slide">
