@@ -6,7 +6,8 @@
 				xmlns:customcontainer="custom.containers.*"
 				minWidth="955" minHeight="600" mouseMove="mouseMove(event)"
 				backgroundColor="gray"
-				color="white">
+				color="white"
+				applicationComplete="init()">
 	<fx:Declarations>
 		<!-- Placer ici les éléments non visuels (services et objets de valeur, par exemple). -->
 	</fx:Declarations>
@@ -18,6 +19,11 @@
 		import mx.events.SliderEvent;
 		
 		import spark.components.Group;
+		
+		private function init():void{
+			sliderAttenuation.value = 30;
+			sliderGrossissement.value = 50;
+		}
 		
 		private function mouseMove(e:Event):void{
 			var a:MouseEvent = MouseEvent(e);
@@ -50,7 +56,7 @@
 			<s:HorizontalLayout horizontalAlign="center"/>
 		</s:layout>
 		<s:Label text="Grossissement : " />
-		<s:HSlider id="sliderGrossissement" minimum="0" maximum="100"
+		<s:HSlider id="sliderGrossissement" minimum="0" maximum="100" 
 				   change="changeGrossissement()"/>
 		
 		<s:Label text="Attenuation : " />
@@ -60,6 +66,7 @@
 		<s:CheckBox id="checkboxCarre" label="Carré" selected="false" change="changeCarre()" />
 		
 	</s:Group>
+
 	<s:Group id="fisheyeeffect" width="80%">
 		<s:Label text="1"/>
 		<s:Label text="2"/>
@@ -112,7 +119,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:YoyoLayout id="fisheyelayout" />
+			<customlayout:FisheyeAdvancedLayout id="fisheyelayout" />
 		</s:layout>
 	</s:Group>
 </mx:Application>

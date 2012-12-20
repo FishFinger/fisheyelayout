@@ -173,14 +173,14 @@ Un premier prototype a été réalisé en javascript / HTML5, avec deux \emph{sl
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{../resources/illustrations/js_screen_1}
-  \caption{Aperçu de l'effet fisheye sans facteur de grossissement (grille de base).}
+  \caption{Aperçu de l'effet fisheye JS sans facteur de grossissement (grille de base).}
   \label{fig:js_6}
 \end{figure}
 \begin{minipage}[H]{.5\textwidth}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{../resources/illustrations/js_screen_2}
-  \caption{Aperçu de l'effet fisheye avec facteur de grossissement.}
+  \caption{Aperçu de l'effet fisheye JS avec facteur de grossissement.}
   \label{fig:js_6}
 \end{figure}
 \end{minipage}
@@ -188,15 +188,55 @@ Un premier prototype a été réalisé en javascript / HTML5, avec deux \emph{sl
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{../resources/illustrations/js_screen_3}
-  \caption{Aperçu de l'effet fisheye avec facteur de grossissement (mode carré).}
+  \caption{Aperçu de l'effet fisheye JS avec facteur de grossissement (mode carré).}
   \label{fig:js_6}
 \end{figure}
 \end{minipage}
 
 \subsubsection{Implémentation Flex}
 
-Un prototype reposant sur les mêmes algorithmes à été développé en flex. Il implémente les même fonctionnalités que son homologues JavaScript, et est basé sur l'implémentation d'un \emph{Layout Spark} personnalisé, comme les version vues dans les sections~\ref{subsec:globale} et~\ref{subsec:propage}.
+Un prototype reposant sur les mêmes algorithmes à été développé en flex. Il implémente les même fonctionnalités que son homologues JavaScript\footnote{Quelques bug sont encore présents. Voir README page~\pageref{sec:readme}}, et est basé sur l'implémentation d'un \emph{Layout Spark} personnalisé, comme les version vues dans les sections~\ref{subsec:globale} et~\ref{subsec:propage}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../resources/illustrations/flex_screen_1}
+  \caption{Aperçu de l'effet fisheye Flex sans facteur de grossissement (grille de base).}
+  \label{fig:js_6}
+\end{figure}
+\begin{minipage}[H]{.5\textwidth}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../resources/illustrations/flex_screen_2}
+  \caption{Aperçu de l'effet fisheye Flex avec facteur de grossissement.}
+  \label{fig:js_6}
+\end{figure}
+\end{minipage}
+\begin{minipage}[H]{.5\textwidth}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../resources/illustrations/flex_screen_3}
+  \caption{Aperçu de l'effet fisheye Flex avec facteur de grossissement (mode carré).}
+  \label{fig:js_6}
+\end{figure}
+\end{minipage}
 
 \section{Environnement de travail}
 
-Dans le but de réellement découvrir flex, nous avons fait le choix de ne pas utiliser Flash Builder. Le développement a donc été effectué via un éditeur de texte avec complétion syntaxique pour \emph{mxml} et les classes \emph{actionscript}. La compilation a été exécutée en ligne de commande avec les compilateur \emph{mxmlc}.
+Dans le but de réellement découvrir flex, nous avons fait le choix de ne pas utiliser Flash Builder. Le développement a donc été effectué sous GNU/Linux à l'aide d'un éditeur de texte avec complétion syntaxique pour \emph{mxml} et les classes \emph{actionscript}. La compilation a été exécutée en ligne de commande avec les compilateur \emph{mxmlc}.
+
+Aucune version d'Air n'étant disponible sous GNU/Linux, nous avons testé nos applications avec le FlashPlugin, en lançant les fichiers \emph{swf} avec un navigateur.
+
+\section{README}
+\label{sec:readme}
+Les sources de ce projet sont disponibles sur notre dépôt GIT (Github) à l'adresse suivante :
+\begin{center}
+  \href{https://github.com/fishfinger/fisheyelayout}{\texttt{https://github.com/fishfinger/fisheyelayout}}
+\end{center}
+
+\begin{description}
+  \item[Fichiers compilés] disponibles dans le dossier \texttt{swf} à la racine.
+  \item[Sources] disponibles dans le dossier \texttt{src} ) à la racine. Les différents \emph{Layout} sont disponibles dans le \emph{package} \texttt{custom.layouts}.
+  \item[Documents] disponibles dans le dossier \texttt{docs}. Y sont présents la présentation et le présent rapport.
+\end{description}
+
+\textit{La version avancée du layout \emph{fisheye} comporte encore quelques bugs d'affichage liés à la méthode permettant l'ajustement de la largeur et la hauteur des éléments permettant d'assurer la largeur constante du conteneur. Ces bugs seront fixés prochainement.}

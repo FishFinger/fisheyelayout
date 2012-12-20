@@ -33,43 +33,6 @@
 			color: white;
 		}
 	</fx:Style>
-	<!--
-    <customcontainer:Grid>
-		<mx:GridRow>
-			<mx:GridItem>
-				<s:Label text="1.1"/>
-			</mx:GridItem>
-			<mx:GridItem>
-				<s:Label text="1.2"/>
-			</mx:GridItem>
-			<mx:GridItem>
-				<s:Label text="1.3"/>
-			</mx:GridItem>
-		</mx:GridRow>
-		<mx:GridRow>
-			<mx:GridItem>
-				<s:Label text="2.1"/>
-			</mx:GridItem>
-			<mx:GridItem>
-				<s:Label text="2.2"/>
-			</mx:GridItem>
-			<mx:GridItem>
-				<s:Label text="2.3"/>
-			</mx:GridItem>
-		</mx:GridRow>
-		<mx:GridRow>
-			<mx:GridItem>
-				<s:Label text="3.1"/>
-			</mx:GridItem>
-			<mx:GridItem>
-				<s:Label text="3.2"/>
-			</mx:GridItem>
-			<mx:GridItem>
-				<s:Label text="3.3"/>
-			</mx:GridItem>
-		</mx:GridRow>
-	</customcontainer:Grid>
-	-->
 	<s:Group id="fisheyeeffect" width="80%">
 		<s:Label text="1"/>
 		<s:Label text="2"/>
@@ -122,7 +85,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:FisheyeAdvancedLayout id="fisheyelayout" maxSize="200" minSize="125" spread="120"/>
+			<customlayout:FisheyeBasicLayout id="fisheyelayout" maxSize="100" minSize="50" spread="120"/>
 		</s:layout>
 	</s:Group>
 </mx:Application>

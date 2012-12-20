@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:customlayout="custom.layouts.*"
+				xmlns:customcontainer="custom.containers.*"
+				minWidth="955" minHeight="600" mouseMove="mouseMove(event)">
+	<fx:Declarations>
+		<!-- Placer ici les éléments non visuels (services et objets de valeur, par exemple). -->
+	</fx:Declarations>
+	
+	<fx:Script><![CDATA[
+		
+		import mx.controls.Alert;
+		import mx.core.FlexGlobals;
+		import mx.core.UIComponent;
+		
+		import spark.components.Group;
+		
+		private function mouseMove(e:Event):void{
+			var a:MouseEvent = MouseEvent(e);
+			fisheyelayout.MousePosition(new Point(a.stageX,a.stageY));
+		}
+	]]></fx:Script>
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace customlayout "custom.layouts.*";
+		
+		#fisheyeeffect s|Label{
+			backgroundColor: black;
+			color: white;
+		}
+	</fx:Style>
+	<s:Label text="Version abandonnée étant donné le rendu non exploitable." color="red" />
+	<s:Group id="fisheyeeffect" width="80%">
+		<s:Label text="1"/>
+		<s:Label text="2"/>
+		<s:Label text="3"/>
+		<s:Label text="4"/>
+		<s:Label text="5"/>
+		<s:Label text="6"/>
+		<s:Label text="7"/>
+		<s:Label text="8"/>
+		<s:Label text="9"/>
+		<s:Label text="10"/>
+		<s:Label text="11"/>
+		<s:Label text="12"/>
+		<s:Label text="13"/>
+		<s:Label text="14"/>
+		<s:Label text="15"/>
+		<s:Label text="16"/>
+		<s:Label text="17"/>
+		<s:Label text="18"/>
+		<s:Label text="19"/>
+		<s:Label text="20"/>
+		<s:Label text="21"/>
+		<s:Label text="22"/>
+		<s:Label text="23"/>
+		<s:Label text="24"/>
+		<s:Label text="25"/>
+		<s:Label text="26"/>
+		<s:Label text="27"/>
+		<s:Label text="28"/>
+		<s:Label text="29"/>
+		<s:Label text="30"/>
+		<s:Label text="31"/>
+		<s:Label text="32"/>
+		<s:Label text="33"/>
+		<s:Label text="34"/>
+		<s:Label text="35"/>
+		<s:Label text="36"/>
+		<s:Label text="37"/>
+		<s:Label text="38"/>
+		<s:Label text="39"/>
+		<s:Label text="40"/>
+		<s:Image source="@Embed('img/neuneu.jpg')" />
+		<s:Label text="42"/>
+		<s:Label text="43"/>
+		<s:Label text="44"/>
+		<s:Label text="45"/>
+		<s:Label text="46"/>
+		<s:Label text="47"/>
+		<s:Label text="48"/>
+		<s:Label text="49"/>
+		<s:Label text="50"/>
+		<s:layout>
+			<customlayout:FisheyePropageLayout id="fisheyelayout" maxSize="200" minSize="90" spread="120"/>
+		</s:layout>
+	</s:Group>
+</mx:Application>
