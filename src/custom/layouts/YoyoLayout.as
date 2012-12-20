@@ -3,11 +3,11 @@ package custom.layouts
   import flash.events.Event;
   import flash.events.MouseEvent;
   import flash.geom.Point;
-	
+  
   import mx.controls.Alert;
   import mx.controls.Label;
   import mx.core.ILayoutElement;
-	
+  
   import spark.components.supportClasses.GroupBase;
   import spark.layouts.supportClasses.LayoutBase;
 	
@@ -27,6 +27,22 @@ package custom.layouts
 
     private var _nb_line:Number = 0;
     private var _nb_col:Number = 0;
+	private var _square_mod:Boolean = false;
+	
+	public function set factGro(value:Number):void
+	{
+		_fact_gro = value;
+	}
+	
+	public function set attenuation(value:Number):void
+	{
+		_attenuation = value;
+	}
+	
+	public function set squareMod(value:Boolean):void
+	{
+		_square_mod = value;
+	}
 
 		
     public function YoyoLayout()
