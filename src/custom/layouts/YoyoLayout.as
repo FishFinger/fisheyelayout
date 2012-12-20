@@ -54,16 +54,12 @@ package custom.layouts
 					
 	// Get de distance between mouse and element
 	var size:Number = getSizeByDistance(distance(localToGlobal(getCenterPosition(x,y)),mousePosition));
-        _cell_width[x] = size;
-        _cell_height[y] = size;	
+        if(_cell_width[x] < size)
+          _cell_width[x] = size;
+
+        if(_cell_height[y] < size)
+          _cell_height[y] = size;	
 			
-				
-	// Find out the element's dimensions sizes.
-	// We do this after the element has been already resized
-	// to its preferred size.
-	var elementWidth:Number = element.getLayoutBoundsWidth();
-	var elementHeight:Number = element.getLayoutBoundsHeight();
-				
         refresh();
       }
 	// Go to the next line
@@ -141,38 +137,78 @@ package custom.layouts
                      var y:Number;
                      x = y = -1;            
 	
-	                var layoutTarget:GroupBase = target;  
-		        var count:int = layoutTarget.numElements;
-                        var i:int;
-                        var element:ILayoutElement;                      
-                         for (i = 0; i < count; i++) 
-                         {         
+	             var layoutTarget:GroupBase = target;  
+		     var count:int = layoutTarget.numElements;
+                     var i:int;
+                     var element:ILayoutElement;  
+                     
+                     var pos_x:Number = target.x;
+                     var pos_y:Number = target.y;   
+                    
+                     /*for (i = 0; i < count; i++) 
+                     {         
                                 
-                                ++x;
-                        	// Go to the next line
-				if (x == _nbPerRow)
-				{
-                                        x = 0;
-					++y;
-				}
+                       ++x;
+                       // Go to the next line
+		       if (x == _nbPerRow)
+		       {
+                         x = 0;
+			 ++y;
+		       }
 
-                                // get the current element, we're going to work with the
-			         element = useVirtualLayout ? 
+                       // get the current element, we're going to work with the
+		       element = useVirtualLayout ? 
 					layoutTarget.getVirtualElementAt(i) :
 					layoutTarget.getElementAt(i);
                                                               
-			        // Resize the element to its preferred size by passing
-				element.setLayoutBoundsSize(_cell_width[x], _cell_height[y]);
+		        // Resize the element to its preferred size by passing
+			element.setLayoutBoundsSize(_cell_width[x], _cell_height[y]);
 				
-				// Find out the element's dimensions sizes.
-				// We do this after the element has been already resized
-				// to its preferred size.
-				var elementWidth:Number = element.getLayoutBoundsWidth();
-				var elementHeight:Number = element.getLayoutBoundsHeight();
+			// Find out the element's dimensions sizes.
+			// We do this after the element has been already resized
+			// to its preferred size.
+			var elementWidth:Number = element.getLayoutBoundsWidth();
+			var elementHeight:Number = element.getLayoutBoundsHeight();
 				
-				// Position the element
-				element.setLayoutBoundsPosition(x*(_defaultSize+_space), y*(_space+_defaultSize));
-			}
+			// Position the element
+			element.setLayoutBoundsPosition(
+                                   target.x + x*(_defaultSize+_space), 
+                                   target.y + y*(_defaultSize+_space)
+                               );
+			}*/
+
+                        var h:Number;
+                        var w:Number;
+                        for( x = 0; x < _grid.length; x++)
+                        {
+                          for( y = 0; y < _grid[x].length; y++)
+                          {
+                                w = _cell_width[x];
+                                h = _cell_height[y];
+                                // get the current element, we're going to work with the
+		                element = _grid[x][y];
+                                                              
+		                // Resize the element to its preferred size by passing
+			         element.setLayoutBoundsSize(w, h);
+				
+			        // Find out the element's dimensions sizes.
+			        // We do this after the element has been already resized
+			        // to its preferred size.
+			        var elementWidth:Number = element.getLayoutBoundsWidth();
+			        var elementHeight:Number = element.getLayoutBoundsHeight();
+				
+			        // Position the element
+			        element.setLayoutBoundsPosition(
+                                   pos_x, 
+                                   pos_y
+                                   );
+			
+                                pos_y += h + 2*_space;
+                           }
+                         pos_x += w + 2*_space;
+                         pos_y = target.y;                          
+                      }
+
                 }               
 
 
