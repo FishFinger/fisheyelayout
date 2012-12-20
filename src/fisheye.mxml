@@ -122,7 +122,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:FisheyeBasicLayout id="fisheyelayout" maxSize="100" minSize="25" spread="120"/>
+			<customlayout:FisheyeAdvancedLayout id="fisheyelayout" maxSize="200" minSize="125" spread="120"/>
 		</s:layout>
 	</s:Group>
 </mx:Application>

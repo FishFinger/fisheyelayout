@@ -99,7 +99,8 @@ package custom.layouts
 			
 			if(size < _minSize) size = _minSize;
 			if(size > _maxSize) size = _maxSize;
-			return size;
+			//return size;
+			return _maxSize;
 		}
 		
 
@@ -119,25 +120,6 @@ package custom.layouts
 			doRow(noRow,noCol,0);
 			
 			var size:Number = initialSize;
-			for(row = noRow + 1; row < _components.length; row++){
-				size /= coeff;
-				c = _components[row][noCol];
-				setElementSize(c,size,size);
-				
-				// Positionning
-				if(row - 1 > -1)
-				{
-					previousComponent = _components[row-1][noCol];
-					PCwidth = previousComponent.getLayoutBoundsWidth();
-					PCy = previousComponent.getLayoutBoundsY();
-					
-					y = PCy + _gap + PCwidth;
-					shiftY = y - c.getLayoutBoundsY();
-					c.setLayoutBoundsPosition(c.getLayoutBoundsX(),y);
-					doRow(row,noCol,shiftY);
-				}
-			}
-			size = initialSize;
 			for(row = noRow - 1; row > -1; row--){
 				size /= coeff;
 				c = _components[row][noCol];
@@ -154,6 +136,25 @@ package custom.layouts
 					shiftY = y - c.getLayoutBoundsY();
 					c.setLayoutBoundsPosition(c.getLayoutBoundsX(), y);
 					
+					doRow(row,noCol,shiftY);
+				}
+			}
+			size = initialSize;
+			for(row = noRow + 1; row < _components.length; row++){
+				size /= coeff;
+				c = _components[row][noCol];
+				setElementSize(c,size,size);
+				
+				// Positionning
+				if(row - 1 > -1)
+				{
+					previousComponent = _components[row-1][noCol];
+					PCwidth = previousComponent.getLayoutBoundsWidth();
+					PCy = previousComponent.getLayoutBoundsY();
+					
+					y = PCy + _gap + PCwidth;
+					shiftY = y - c.getLayoutBoundsY();
+					c.setLayoutBoundsPosition(c.getLayoutBoundsX(),y);
 					doRow(row,noCol,shiftY);
 				}
 			}
@@ -298,47 +299,11 @@ package custom.layouts
 			return Math.sqrt(dx * dx + dy * dy);
 		}
 		
-		private function getSizeByDistance(distance:Number):Number{
-			if(distance == 0) distance = 1;
-			var size:Number = _maxSize / (distance / _spread);
-			
-			if(size > _maxSize) size = _maxSize;
-			else if(size < _minSize) size = _minSize;
-			
-			return size;
-		}
-		
 		private function localToGlobal(point:Point):Point{
 			var retour:Point = point.clone();
 			retour.x += target.x;
 			retour.y += target.y;
 			return retour;
-		}
-		
-		private function getPositionByMouse(mousePosition:Point,elementPosition:Point):Point{
-			var distanceX:Number = Math.abs(mousePosition.x - elementPosition.x);
-			var distanceY:Number = Math.abs(mousePosition.y - elementPosition.y);
-			var distance:Number = distance(mousePosition,elementPosition);
-			
-			var xTranslation:Number = getXFreeSpace(mousePosition,elementPosition);
-			var yTranslation:Number = getYFreeSpace(mousePosition,elementPosition);
-			
-			if(mousePosition.x < elementPosition.x) xTranslation *= -1;
-			if(mousePosition.y < elementPosition.y) yTranslation *= -1;
-			
-			var x:Number = elementPosition.x + xTranslation;
-			var y:Number = elementPosition.y + yTranslation;
-			return new Point(x,y);
-		}
-		
-		private function getXFreeSpace(point1:Point,point2:Point):Number{
-			var distance:Number = Math.abs(point1.x - point2.x);
-			return distance / _agglomerate;
-		}
-		
-		private function getYFreeSpace(point1:Point,point2:Point):Number{
-			var distance:Number = Math.abs(point1.y - point2.y);
-			return distance / _agglomerate;
 		}
 	}
 }
