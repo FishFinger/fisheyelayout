@@ -188,7 +188,7 @@ package custom.layouts
                           for( y = 0; y < _grid[x].length; y++)
                           {
                                 w = _cell_width[x] /*+ hackx*/ ; //@fixme
-                                h = _cell_height[y] + hacky;
+                                h = _cell_height[y] /*+ hacky*/;
                                 // get the current element, we're going to work with the
 		                element = _grid[x][y];
                                
