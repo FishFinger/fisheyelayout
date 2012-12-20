@@ -85,7 +85,7 @@ package custom.layouts
                         var i:int;
                         var element:ILayoutElement;    
 			  // The max item per row
-			  _nbPerRow = Math.round(containerWidth/_defaultSize);
+			  _nbPerRow = Math.round(containerWidth/(_defaultSize+_space*2));
                           for(i = 0; i < 12 ; i++)
                              _grid[i] = new Array();
 			
@@ -138,14 +138,12 @@ package custom.layouts
                        pos_x += _cell_width[i];
     
                     var hackx:Number = (_defaultSize*_nb_col - pos_x) / _nb_col; 
-                    //Alert.show(" (" +_defaultSize + "*"  + _nb_col + " -" + pos_x + ") /" +  _nb_col + ";" +hackx+"x");
                     
 
                     for(i = 0; i < _nb_line; i++)
                        pos_y += _cell_height[i];
         
                     var hacky:Number = (_defaultSize*_nb_line - pos_y) / _nb_line; 
-                     //Alert.show( "(" +_defaultSize + "*" +_nb_line + " -"+ pos_y + ") /" +  _nb_line + "; " +hacky+"y");
 
 
                     pos_x = 0;
