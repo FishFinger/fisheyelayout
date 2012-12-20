@@ -4,7 +4,9 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				xmlns:customlayout="custom.layouts.*"
 				xmlns:customcontainer="custom.containers.*"
-				minWidth="955" minHeight="600" mouseMove="mouseMove(event)">
+				minWidth="955" minHeight="600" mouseMove="mouseMove(event)"
+				backgroundColor="gray"
+				color="white">
 	<fx:Declarations>
 		<!-- Placer ici les éléments non visuels (services et objets de valeur, par exemple). -->
 	</fx:Declarations>
@@ -39,8 +41,8 @@
 		@namespace customlayout "custom.layouts.*";
 		
 		#fisheyeeffect s|Label{
-			backgroundColor: black;
-			color: white;
+			backgroundColor: white;
+			color: gray;
 		}
 	</fx:Style>
 	<s:Group>
