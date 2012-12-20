@@ -3,7 +3,7 @@
 	<meta name="generator" content="HTML Tidy for Linux/x86 (vers 1st November 2003), see www.w3.org" />
 	<title>Présentation Flex</title>
 
-	<meta name="duration" content="30" />
+	<meta name="duration" content="10" />
 	<meta charset="utf-8" />
 	
 	<link rel="stylesheet" href="styles/slidy.css" type="text/css" />
@@ -22,7 +22,7 @@
 <body>
 <div class="frontground">
 	<img alt="" id="head-icon" src="graphics/icon-blue.png" />
-	<h1>Allocation de tâches dans les SMA</h1>
+	<h1>Effet fisheye</h1>
 </div>
 
 <?php include '1.php' ?>
