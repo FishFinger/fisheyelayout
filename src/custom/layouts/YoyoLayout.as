@@ -73,30 +73,38 @@ package custom.layouts
       var x:Number = -1;
       var y:Number = 0;
       
-      resetCellSize();			
+      //resetCellSize();			
 
-      // loop through the elements
-      var layoutTarget:GroupBase = target;
-      var count:int = layoutTarget.numElements;
-      for (var i:int = 0; i < count; i++)
-      {
-            x += 1;	      
-                            if(x == _nbPerRow)
+     var size:Number;
+                        for( x = 0; x < _grid.length; x++)
+                        {
+                        
+                          _cell_width[x] = 0;
+                          for( y = 0; y < _grid[1].length; y++)
+                          {
+	                    // Get de distance between mouse and element
+	                    size = getSizeByDistance(distance(localToGlobal(getCenterPosition(x,y)),mousePosition));
+                            if(_cell_width[x] < size)
                             {
-                                 y += 1;     
-                                 x = 0;   
-                            }   
-
-	// Get de distance between mouse and element
-	var size:Number = getSizeByDistance(distance(localToGlobal(getCenterPosition(x,y)),mousePosition));
-        if(_cell_width[x] < size)
-          _cell_width[x] = size;
-
-        if(_cell_height[y] < size)
-          _cell_height[y] = size;	
-			
+                               _cell_width[x] = size;
+                             }
+                          }
+                          }
+                             
+                             for( y = 0; y < _grid[0].length; y++)
+                        {
+                        
+                          _cell_height[y] = 0;
+                          for( x = 0; x < _grid.length; x++)
+                          {
+	                  // Get de distance between mouse and element
+	                  size = getSizeByDistance(distance(localToGlobal(getCenterPosition(x,y)),mousePosition));
+                          if(_cell_height[y] < size)
+                            _cell_height[y] = size;
+                            }	
+			}
         refresh();
-      }
+      
       }
 		
 		override public function updateDisplayList(containerWidth:Number, containerHeight:Number):void
@@ -116,7 +124,7 @@ package custom.layouts
                         var element:ILayoutElement;    
 			  // The max item per row
 			  _nbPerRow = Math.round(containerWidth/(_defaultSize+_space*2));
-                          for(i = 0; i < count ; i++)
+                          for(i = 0; i < _nbPerRow ; i++)
                              _grid[i] = new Array();
 			
 			  // loop through the elements
@@ -187,8 +195,8 @@ package custom.layouts
                         {
                           for( y = 0; y < _grid[x].length; y++)
                           {
-                                w = _cell_width[x] /*+ hackx*/ ; //@fixme
-                                h = _cell_height[y] /*+ hacky*/;
+                                w = _cell_width[x] + hackx ; //@fixme
+                                h = _cell_height[y] + hacky;
                                 // get the current element, we're going to work with the
 		                element = _grid[x][y];
                                
@@ -238,8 +246,8 @@ package custom.layouts
 
 		 private function getCenterPosition(x:int,y:int):Point{
 			var center:Point = new Point();
-			center.x = _defaultSize*x + _defaultSize / 2;
-			center.y = _defaultSize*y + _defaultSize / 2;
+			center.x = (_defaultSize+_space*2)*x + _defaultSize / 2;
+			center.y = (_defaultSize+_space*2)*y + _defaultSize / 2;
 			return center;
 		}
 		
