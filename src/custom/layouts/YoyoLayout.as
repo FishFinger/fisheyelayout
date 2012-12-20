@@ -25,11 +25,14 @@ package custom.layouts
     private var _attenuation:Number = 150;	
     private var _space:Number = 4;	
 
+    private var _nb_line:Number = 0;
+    private var _nb_col:Number = 0;
+
 		
     public function YoyoLayout()
     {
       super();
-      Alert.show("Construct");
+     
     }
 		
     public function MousePosition(mousePosition:Point):void
@@ -102,7 +105,7 @@ package custom.layouts
                         var element:ILayoutElement;    
 			  // The max item per row
 			  _nbPerRow = Math.round(containerWidth/_defaultSize);
-                          for(i = 0; i < count ; i++)
+                          for(i = 0; i < 20 ; i++)
                              _grid[i] = new Array();
 			
 			  // loop through the elements
@@ -124,9 +127,14 @@ package custom.layouts
                             _grid[x][y] = element;
                             _cell_width[x] = _defaultSize;
                             _cell_height[y] = _defaultSize;
+                            if(x > _nb_line)
+                               _nb_line = x;
                            }
                            _init = true;
+                           _nb_col = y;
                          }
+                         _nb_col++;
+                         _nb_line++;
 
                     
 		}
@@ -142,49 +150,32 @@ package custom.layouts
                      var i:int;
                      var element:ILayoutElement;  
                      
-                     var pos_x:Number = target.x;
-                     var pos_y:Number = target.y;   
+                     var pos_x:Number = 0;
+                     var pos_y:Number = 0;   
                     
-                     /*for (i = 0; i < count; i++) 
-                     {         
-                                
-                       ++x;
-                       // Go to the next line
-		       if (x == _nbPerRow)
-		       {
-                         x = 0;
-			 ++y;
-		       }
+                    for(i = 0; i <= _nb_col; i++)
+                       pos_x += _cell_width[i];
+    
+                    var hackx:int = (_defaultSize*_nb_col - pos_x) / _nb_col; 
+                    
 
-                       // get the current element, we're going to work with the
-		       element = useVirtualLayout ? 
-					layoutTarget.getVirtualElementAt(i) :
-					layoutTarget.getElementAt(i);
-                                                              
-		        // Resize the element to its preferred size by passing
-			element.setLayoutBoundsSize(_cell_width[x], _cell_height[y]);
-				
-			// Find out the element's dimensions sizes.
-			// We do this after the element has been already resized
-			// to its preferred size.
-			var elementWidth:Number = element.getLayoutBoundsWidth();
-			var elementHeight:Number = element.getLayoutBoundsHeight();
-				
-			// Position the element
-			element.setLayoutBoundsPosition(
-                                   target.x + x*(_defaultSize+_space), 
-                                   target.y + y*(_defaultSize+_space)
-                               );
-			}*/
+                    for(i = 0; i <= _nb_line; i++)
+                       pos_y += _cell_height[i];
+        
+                    var hacky:int = (_defaultSize*_nb_line - pos_y) / _nb_line; 
+                   
 
+                    pos_x = 0;
+                    pos_y = target.y;   
+                   
                         var h:Number;
                         var w:Number;
                         for( x = 0; x < _grid.length; x++)
                         {
                           for( y = 0; y < _grid[x].length; y++)
                           {
-                                w = _cell_width[x];
-                                h = _cell_height[y];
+                                w = _cell_width[x] + hackx;
+                                h = _cell_height[y] + hacky;
                                 // get the current element, we're going to work with the
 		                element = _grid[x][y];
                                                               
