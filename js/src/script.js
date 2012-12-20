@@ -10,7 +10,9 @@ var list;
 var MODE_SQUARE = false;
 
 var slider;
+var attenuator;
 var fact_gro = 0.5;
+var attenuation = 120;
 
 function main()
 {
@@ -21,8 +23,16 @@ function main()
     slider = document.getElementById("fact_gro");
     slider.addEventListener("change", sliderf, false);
     
+    attenuator = document.getElementById("attenuation");
+    attenuator.addEventListener("change", update_attenuator, false);
+    
     checkbox = document.getElementById("mode_square");
     checkbox.addEventListener("change", toggle_square_mod, false);
+}
+
+function update_attenuator()
+{
+    attenuation = 200 - attenuator.value ;
 }
 
 function toggle_square_mod()
@@ -46,7 +56,7 @@ function init(e)
     cell_width = new Array();
     cell_height = new Array();
 
-    for(var i=1; i<300; ++i)
+    for(var i=1; i<231; ++i)
     {
         var div = document.createElement('div');
         div.setAttribute("class", "fish");
@@ -150,7 +160,7 @@ function souris(event)
                 tab[0][0].left + x*(width+space) + width/2,
                 tab[0][0].top + y*(height+space) + height/2
             );
-            size = height + parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
+            size = height + parseInt(((fact_gro)/(Math.pow(dist/attenuation,2)+0.33)-(fact_gro))*100);
             if(size > cell_height[y])
                 cell_height[y] = size;
         }
@@ -167,7 +177,7 @@ function souris(event)
                 tab[0][0].left + x*(width+space) + width/2,
                 tab[0][0].top + y*(height+space) + height/2
             );
-            size = width + parseInt(((fact_gro)/(Math.pow(dist/100,2)+0.33)-(fact_gro))*100);
+            size = width + parseInt(((fact_gro)/(Math.pow(dist/attenuation,2)+0.33)-(fact_gro))*100);
             if(size > cell_width[x])
                 cell_width[x] = size;
         }
