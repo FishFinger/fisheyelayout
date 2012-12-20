@@ -22,12 +22,13 @@ package custom.layouts
     private var _nbPerRow:Number = 0;
             
     private var _fact_gro:Number = 0.3;
-    private var _attenuation:Number = 150;	
+    private var _attenuation:Number = 150;
+	private var _square_mod:Boolean = false;
+	
     private var _space:Number = 4;	
 
     private var _nb_line:Number = 0;
     private var _nb_col:Number = 0;
-	private var _square_mod:Boolean = false;
 	
 	public function set factGro(value:Number):void
 	{
@@ -43,8 +44,21 @@ package custom.layouts
 	{
 		_square_mod = value;
 	}
-
-    private var _square_mod:Boolean = false;
+	
+	public function majFactGro(value:Number):void
+	{
+		_fact_gro = value;
+	}
+	
+	public function majAttenuation(value:Number):void
+	{
+		_attenuation = value;
+	}
+	
+	public function majSquareMod(value:Boolean):void
+	{
+		_square_mod = value;
+	}
 
 		
     public function YoyoLayout()
