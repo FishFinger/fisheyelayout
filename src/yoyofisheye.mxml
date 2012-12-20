@@ -10,16 +10,26 @@
 	</fx:Declarations>
 	
 	<fx:Script><![CDATA[
-		
 		import mx.controls.Alert;
 		import mx.core.FlexGlobals;
 		import mx.core.UIComponent;
+		import mx.events.SliderEvent;
 		
 		import spark.components.Group;
 		
 		private function mouseMove(e:Event):void{
 			var a:MouseEvent = MouseEvent(e);
 			fisheyelayout.MousePosition(new Point(a.stageX,a.stageY));
+		}
+		
+		private function changeGrossissement():void{
+			Alert.show("grossissement ! -> " + sliderGrossissement.value);
+		}
+		private function changeAttenuation():void{
+			Alert.show("attenuation ! -> " + sliderAttenuation.value);
+		}
+		private function changeCarre():void{
+			Alert.show("carré ! -> " + checkboxCarre.selected);
 		}
 	]]></fx:Script>
 	
@@ -28,12 +38,26 @@
 		@namespace mx "library://ns.adobe.com/flex/mx";
 		@namespace customlayout "custom.layouts.*";
 		
-		s|Label{
+		#fisheyeeffect s|Label{
 			backgroundColor: black;
 			color: white;
 		}
 	</fx:Style>
-
+	<s:Group>
+		<s:layout>
+			<s:HorizontalLayout horizontalAlign="center"/>
+		</s:layout>
+		<s:Label text="Grossissement : " />
+		<s:HSlider id="sliderGrossissement" minimum="0" maximum="100"
+				   thumbRelease="changeGrossissement()"/>
+		
+		<s:Label text="Attenuation : " />
+		<s:HSlider id="sliderAttenuation" minimum="0" maximum="100"
+				   thumbRelease="changeAttenuation()" />
+		
+		<s:CheckBox id="checkboxCarre" label="Carré" selected="false" change="changeCarre()" />
+		
+	</s:Group>
 	<s:Group id="fisheyeeffect" width="80%">
 		<s:Label text="1"/>
 		<s:Label text="2"/>
@@ -75,6 +99,7 @@
 		<s:Label text="38"/>
 		<s:Label text="39"/>
 		<s:Label text="40"/>
+		<s:Image source="@Embed('img/neuneu.jpg')" />
 		<s:Label text="42"/>
 		<s:Label text="43"/>
 		<s:Label text="44"/>
@@ -85,7 +110,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:YoyoLayout id="fisheyelayout"/>
+			<customlayout:YoyoLayout id="fisheyelayout" />
 		</s:layout>
 	</s:Group>
 </mx:Application>
