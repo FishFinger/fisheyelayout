@@ -105,20 +105,33 @@ Dans le but d'améliorer le second point, la disposition des éléments des lign
 
 \subsection{Approche mathématique}
 
-La dernière approche et certainement la meilleur est l'approche
-mathématique.
+La dernière approche est une approche mathématique. L'idée est de
+considérer l'ensemble des éléments comme un tableau d'éléments puis de
+jouer sur la largeur des colonnes et la hauteur des lignes.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{../resources/illustrations/js_1}
   \caption{Grille d'éléments sans présence de la souris}
+  \label{fig:js_1}
 \end{figure}
+
+La figure \ref{fig:js_1} ci-dessus représente l'état du tableau en
+l'absence de la souris. Dans ce cas, la largeur et la hauteur des
+cellules est représentées par une fonction constante. La figure
+\ref{fig:js_2} montre comment la largeur et la hauteur des cellules
+sont modifiées par la présence de la souris. La nouvelle taille des
+cellules est calculée grâce à deux fonctions gaussiennes indépendante,
+une pour la largeur et une autre pour la hauteur.  
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{../resources/illustrations/js_2}
   \caption{Grille d'éléments modifié par la présence de la souris}
 \end{figure}
+
+Ces fonctions sont 
+$\frac{facteur\_grossissement}{{dist/attenuation}^{2}+0.5}-facteur\_grossissement$
 
 \begin{figure}[H]
   \centering
