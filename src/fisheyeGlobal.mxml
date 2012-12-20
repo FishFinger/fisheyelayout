@@ -4,34 +4,22 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				xmlns:customlayout="custom.layouts.*"
 				xmlns:customcontainer="custom.containers.*"
-				minWidth="955" minHeight="600" mouseMove="mouseMove(event)"
-				backgroundColor="gray"
-				color="white">
+				minWidth="955" minHeight="600" mouseMove="mouseMove(event)">
 	<fx:Declarations>
 		<!-- Placer ici les éléments non visuels (services et objets de valeur, par exemple). -->
 	</fx:Declarations>
 	
 	<fx:Script><![CDATA[
+		
 		import mx.controls.Alert;
 		import mx.core.FlexGlobals;
 		import mx.core.UIComponent;
-		import mx.events.SliderEvent;
 		
 		import spark.components.Group;
 		
 		private function mouseMove(e:Event):void{
 			var a:MouseEvent = MouseEvent(e);
 			fisheyelayout.MousePosition(new Point(a.stageX,a.stageY));
-		}
-		
-		private function changeGrossissement():void{
-			fisheyelayout.majFactGro(sliderGrossissement.value / 100);
-		}
-		private function changeAttenuation():void{
-			fisheyelayout.majAttenuation(200 - sliderAttenuation.value);
-		}
-		private function changeCarre():void{
-			fisheyelayout.majSquareMod(checkboxCarre.selected);
 		}
 	]]></fx:Script>
 	
@@ -40,26 +28,11 @@
 		@namespace mx "library://ns.adobe.com/flex/mx";
 		@namespace customlayout "custom.layouts.*";
 		
-		#fisheyeeffect s|Label{
-			backgroundColor: white;
-			color: gray;
+		s|Label{
+			backgroundColor: black;
+			color: white;
 		}
 	</fx:Style>
-	<s:Group>
-		<s:layout>
-			<s:HorizontalLayout horizontalAlign="center"/>
-		</s:layout>
-		<s:Label text="Grossissement : " />
-		<s:HSlider id="sliderGrossissement" minimum="0" maximum="100"
-				   change="changeGrossissement()"/>
-		
-		<s:Label text="Attenuation : " />
-		<s:HSlider id="sliderAttenuation" minimum="0" maximum="100"
-				   change="changeAttenuation()" />
-		
-		<s:CheckBox id="checkboxCarre" label="Carré" selected="false" change="changeCarre()" />
-		
-	</s:Group>
 	<s:Group id="fisheyeeffect" width="80%">
 		<s:Label text="1"/>
 		<s:Label text="2"/>
@@ -112,7 +85,7 @@
 		<s:Label text="49"/>
 		<s:Label text="50"/>
 		<s:layout>
-			<customlayout:YoyoLayout id="fisheyelayout" />
+			<customlayout:FisheyeBasicLayout id="fisheyelayout" maxSize="100" minSize="50" spread="120"/>
 		</s:layout>
 	</s:Group>
 </mx:Application>
