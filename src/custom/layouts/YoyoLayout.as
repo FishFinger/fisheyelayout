@@ -116,7 +116,7 @@ package custom.layouts
                         var element:ILayoutElement;    
 			  // The max item per row
 			  _nbPerRow = Math.round(containerWidth/(_defaultSize+_space*2));
-                          for(i = 0; i < 12 ; i++)
+                          for(i = 0; i < count ; i++)
                              _grid[i] = new Array();
 			
 			  // loop through the elements
@@ -167,7 +167,8 @@ package custom.layouts
                     for(i = 0; i < _nb_col; i++)
                        pos_x += _cell_width[i];
     
-                    var hackx:Number = (_defaultSize*_nb_col - pos_x) / _nb_col; 
+                    var hackx:Number = (_defaultSize*_nb_col - pos_x) / _nb_col;
+                     
                     
 
                     for(i = 0; i < _nb_line; i++)
@@ -186,7 +187,7 @@ package custom.layouts
                         {
                           for( y = 0; y < _grid[x].length; y++)
                           {
-                                w = _cell_width[x] + hackx;
+                                w = _cell_width[x] /*+ hackx*/ ; //@fixme
                                 h = _cell_height[y] + hacky;
                                 // get the current element, we're going to work with the
 		                element = _grid[x][y];
