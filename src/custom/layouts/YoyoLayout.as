@@ -28,6 +28,8 @@ package custom.layouts
     private var _nb_line:Number = 0;
     private var _nb_col:Number = 0;
 
+    private var _square_mod:Boolean = false;
+
 		
     public function YoyoLayout()
     {
@@ -170,6 +172,7 @@ package custom.layouts
                    
                         var h:Number;
                         var w:Number;
+                      
                         for( x = 0; x < _grid.length; x++)
                         {
                           for( y = 0; y < _grid[x].length; y++)
@@ -178,9 +181,33 @@ package custom.layouts
                                 h = _cell_height[y] + hacky;
                                 // get the current element, we're going to work with the
 		                element = _grid[x][y];
-                                                              
-		                // Resize the element to its preferred size by passing
-			         element.setLayoutBoundsSize(w, h);
+                               
+                               
+                                if(_square_mod)
+                                {
+                                 var size:int;
+                                  size = min(w,h);
+                    
+                                     element.setLayoutBoundsSize(size,size);
+                                 
+                                        // Position the element
+			        element.setLayoutBoundsPosition(
+                                   pos_x + (w-size)/2, 
+                                   pos_y + (h-size)/2
+                                   );
+                    
+                                }
+                                else
+                                {
+                                                                                            
+		                     // Resize the element to its preferred size by passing
+			             element.setLayoutBoundsSize(w, h);
+                                     // Position the element
+			        element.setLayoutBoundsPosition(
+                                   pos_x, 
+                                   pos_y
+                                   );
+                                 }
 				
 			        // Find out the element's dimensions sizes.
 			        // We do this after the element has been already resized
@@ -188,11 +215,7 @@ package custom.layouts
 			        var elementWidth:Number = element.getLayoutBoundsWidth();
 			        var elementHeight:Number = element.getLayoutBoundsHeight();
 				
-			        // Position the element
-			        element.setLayoutBoundsPosition(
-                                   pos_x, 
-                                   pos_y
-                                   );
+			     
 			
                                 pos_y += h + 2*_space;
                            }
@@ -241,7 +264,10 @@ package custom.layouts
                            _cell_height[i] = 0;
                 }
 		
-
+                private function min(x:int, y:int):int
+                {               
+                  return (x<y)? x : y;
+                }
 		
 
   }               	
