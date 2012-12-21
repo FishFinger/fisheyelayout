@@ -121,7 +121,7 @@ l'absence de la souris. Dans ce cas, la largeur et la hauteur des
 cellules sont représentés par une fonction constante. La figure
 \ref{fig:js_2} montre comment la largeur et la hauteur des cellules
 sont modifiées par la présence de la souris. La nouvelle taille des
-cellules est calculée grâce à deux fonctions gaussiennes indépendante,
+cellules est calculée grâce à deux fonctions gaussiennes indépendantes,
 une pour la largeur et une autre pour la hauteur.  
 
 \begin{figure}[H]
@@ -131,7 +131,7 @@ une pour la largeur et une autre pour la hauteur.
     \label{fig:js_2}
 \end{figure}
 
-Ces fonctions sont 
+Ces fonctions sont définies comme suit :
 \begin{equation}
 taille\_par\_defaut + \frac{facteur\_grossissement}{(dist/attenuation)^{2}+0.5}-facteur\_grossissement
 \end{equation}
@@ -145,7 +145,13 @@ taille\_par\_defaut + \frac{facteur\_grossissement}{(dist/attenuation)^{2}+0.5}-
 
 La surface verte représente le gain de taille par rapport à la taille par défaut, la surface rouge représente la perte de taille. L'enjeu lors du parcours de la souris est de faire en sorte que ces deux surface soient égales.
 
-Ce problème est mis en évidence dans le pire des cas lorsque la souris est au maximum contre un bord. Comme il est possible de le voir sur la figure~\ref{fig:js_4}, dans ce cas la surface de gain est bien plus élevé que la surface de perte. Dans le but d'atteindre une répartition parfaite entre ces deux surface, la différence entre la surface rouge est la surface verte est calculé, puis   redistribuée sur tous les éléments de la ligne et/ou colonne. La figure~\ref{fig:js_5} représente le résultat obtenu.
+Ce problème est mis en évidence dans le pire des cas lorsque la souris
+est au maximum contre un bord. Comme il est possible de le voir sur la
+figure~\ref{fig:js_4}, dans ce cas la surface de gain est bien plus
+élevée que la surface de perte. Dans le but d'atteindre une
+répartition parfaite entre ces deux surfaces, la différence entre la
+surface rouge et la surface verte est calculée, puis   redistribuée
+sur tous les éléments de la ligne et/ou de la colonne. La figure~\ref{fig:js_5} représente le résultat obtenu.
 
 \begin{minipage}[H]{.5\textwidth}
 \begin{figure}[H]
@@ -168,7 +174,7 @@ Ce problème est mis en évidence dans le pire des cas lorsque la souris est au 
 
 \subsubsection{Implémentation JavaScript}
 
-Un premier prototype a été réalisé en javascript / HTML5, avec deux \emph{sliders} permettant la modification à la volé de facteur de grossissement, et de l'atténuation. Un \emph{checkbox} permet également la représentation des élément sous la forme de carrés.
+Un premier prototype a été réalisé en javascript / HTML5, avec deux \emph{sliders} permettant la modification à la volé du facteur de grossissement et de l'atténuation. Une \emph{checkbox} permet également la représentation des éléments sous la forme de carrés.
 
 \begin{figure}[H]
   \centering
@@ -195,7 +201,7 @@ Un premier prototype a été réalisé en javascript / HTML5, avec deux \emph{sl
 
 \subsubsection{Implémentation Flex}
 
-Un prototype reposant sur les mêmes algorithmes à été développé en flex. Il implémente les même fonctionnalités que son homologues JavaScript, et est basé sur l'implémentation d'un \emph{Layout Spark} personnalisé, comme les version vues dans les sections~\ref{subsec:globale} et~\ref{subsec:propage}.
+Un prototype reposant sur les mêmes algorithmes à été développé en flex. Il implémente les mêmes fonctionnalités que son homologues JavaScript, et est basé sur l'implémentation d'un \emph{Layout Spark} personnalisé, comme les version vues dans les sections~\ref{subsec:globale} et~\ref{subsec:propage}.
 
 \begin{figure}[H]
   \centering
